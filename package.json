@@ -1,7 +1,7 @@
 {
   "name": "backendtripon",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/server.js",
   "engines": {
     "node": "18"
   },
