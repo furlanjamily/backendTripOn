@@ -28,9 +28,13 @@ app.post("/users", async (request, reply) => {
   return reply.status(201).send();
 });
 
-app.listen({
-  host: "0.0.0.0",
-  port: process.env.PORT ? Number(process.env.PORT) : 3333,
-}).then(() => {
+// Garantindo que a porta seja um número
+const port = Number(process.env.PORT) || 3333; // Converte para número
+app.listen({ host: "0.0.0.0", port }, (err) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
+  console.log(`Servidor rodando na porta ${port}`);
   console.log("HTTP Server Running");
 });
