@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "tsx src/server.ts",
-    "build": "tsup src",
+    "build": "tsc",
     "start": "node dist/index.js"
   },
   "keywords": [],
