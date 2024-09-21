@@ -1,40 +1,48 @@
-import { PrismaClient } from "@prisma/client";
-import fastify from "fastify";
-import { z } from "zod";
+import fastify from 'fastify'
+import cors from '@fastify/cors'
+import { createTrip } from './routes/create-trip'
+import {
+  serializerCompiler,
+  validatorCompiler,
+} from 'fastify-type-provider-zod'
+import { confirmTrip } from './routes/confirm-trip'
+import { confirmParticipants } from './routes/confirm-participant'
+import { createActivity } from './routes/create-activity'
+import { getActivities } from './routes/get-activities'
+import { createLink } from './routes/create-link'
+import { getLinks } from './routes/get-links'
+import { getParticipants } from './routes/get-participants'
+import { createInvite } from './routes/create-invite'
+import { updateTrip } from './routes/update-trip'
+import { getTripDetails } from './routes/get-trip-details'
+import { getParticipant } from './routes/get-participant'
+import { errorHandler } from './error-handler'
+import { env } from './env'
 
-const app = fastify();
-const prisma = new PrismaClient();
+const app = fastify()
 
-app.get("/users", async () => {
-  const users = await prisma.user.findMany();
-  return { users };
-});
+app.register(cors, {
+  origin: '*',
+})
 
-app.post("/users", async (request, reply) => {
-  const createUserSchema = z.object({
-    name: z.string(),
-    email: z.string().email(),
-  });
+app.setValidatorCompiler(validatorCompiler)
+app.setSerializerCompiler(serializerCompiler)
 
-  const { name, email } = createUserSchema.parse(request.body);
+app.setErrorHandler(errorHandler)
 
-  await prisma.user.create({
-    data: {
-      name,
-      email,
-    },
-  });
+app.register(createTrip)
+app.register(confirmTrip)
+app.register(confirmParticipants)
+app.register(createActivity)
+app.register(getActivities)
+app.register(createLink)
+app.register(getLinks)
+app.register(getParticipants)
+app.register(createInvite)
+app.register(updateTrip)
+app.register(getTripDetails)
+app.register(getParticipant)
 
-  return reply.status(201).send();
-});
-
-// Garantindo que a porta seja um número
-const port = Number(process.env.PORT) || 3333; // Converte para número
-app.listen({ host: "0.0.0.0", port }, (err) => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
-  }
-  console.log(`Servidor rodando na porta ${port}`);
-  console.log("HTTP Server Running");
-});
+app.listen({ port: env.PORT }).then(() => {
+  console.log('Server running!')
+})
