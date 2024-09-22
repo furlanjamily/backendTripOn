@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("postgresql://neondb_owner:D6xkCo9tmaPn@ep-late-moon-a56ipevq.us-east-2.aws.neon.tech/neondb?sslmode=require")
+  url      = env("DATABASE_URL") // Apenas o nome da variável
 }
 
 model Trip {
