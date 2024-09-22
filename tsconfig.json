@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "outDir": "./dist", // Certifique-se de que a saída vá para 'dist'
+    "outDir": "./dist",
     "rootDir": "./src",
     "target": "es2020",
     "module": "commonjs",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true // Adicionado
   },
   "include": ["src/**/*"]
 }
