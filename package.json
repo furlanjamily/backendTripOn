@@ -16,6 +16,7 @@
   "description": "",
   "devDependencies": {
     "@types/node": "^22.5.5",
+    "@types/nodemailer": "^6.4.16",
     "prisma": "^5.19.1",
     "tsup": "^8.3.0",
     "tsx": "^4.19.1",
